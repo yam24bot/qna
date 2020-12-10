@@ -80,6 +80,9 @@ GEM
     factory_bot (6.1.0)
       activesupport (>= 5.0.0)
     ffi (1.13.1)
+    fuubar (2.5.0)
+      rspec-core (~> 3.0)
+      ruby-progressbar (~> 1.4)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     i18n (1.8.5)
@@ -193,6 +196,8 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    shoulda-matchers (4.4.1)
+      activesupport (>= 4.2.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -241,6 +246,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   factory_bot
+  fuubar
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
@@ -250,6 +256,7 @@ DEPENDENCIES
   rubocop
   sass-rails (>= 6)
   selenium-webdriver
+  shoulda-matchers
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
