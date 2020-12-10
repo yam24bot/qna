@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: qna_development
+
+test:
+  <<: *default
+  database: qna_test
+  
+production:
+  <<: *default
+  database: qna_production
+  username: qna
+  password: <%= ENV['QNA_DATABASE_PASSWORD'] %>
