@@ -13,3 +13,6 @@ AllCops:
     - 'config/spring.rb'
     - 'config/application.rb'
     - 'config/environments/**/*'
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
