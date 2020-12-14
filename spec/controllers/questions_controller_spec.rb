@@ -30,6 +30,8 @@ describe QuestionsController do
   end
 
   describe 'GET #new' do
+    sigh_in_user
+
     before { get :new }
 
     it 'assigns a new Question to @question' do
@@ -42,6 +44,8 @@ describe QuestionsController do
   end
 
   describe 'GET #edit' do
+    sigh_in_user
+
     before do
       get :edit, params: { id: question.id }
     end
@@ -56,6 +60,8 @@ describe QuestionsController do
   end
 
   describe 'POST #create' do
+    sigh_in_user
+
     context 'with valid attributes' do
       it 'saves the new question in the database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
@@ -81,6 +87,8 @@ describe QuestionsController do
   end
 
   describe 'PATCH #update' do
+    sigh_in_user
+
     context 'when valid attributes' do
       it 'assings the requested question to @question' do
         patch :update, params: { question: attributes_for(:question), id: question.id }
@@ -95,6 +103,8 @@ describe QuestionsController do
   end
 
   describe 'DELETE #destroy' do
+    sigh_in_user
+
     before { question }
 
     it 'deletes question' do
