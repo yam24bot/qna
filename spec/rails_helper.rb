@@ -21,11 +21,15 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+
+  config.include FactoryBot::Syntax::Methods
+  config.include Devise::TestHelpers, :type => :controller
+  config.extend ControllerMacros, :type => :controller
+  config.include AcceptanceHelper, :type => :feature
+
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-
-  config.include FactoryBot::Syntax::Methods
 
   config.before(:suite) do
     FactoryBot.find_definitions
