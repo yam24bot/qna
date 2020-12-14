@@ -1,3 +1,4 @@
+require 'factory_bot'
 require 'shoulda/matchers'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -21,6 +22,12 @@ end
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    FactoryBot.find_definitions
   end
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
