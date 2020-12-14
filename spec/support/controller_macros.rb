@@ -1,5 +1,5 @@
 module ControllerMacros
-  def sigh_in_user
+  def sign_in_user
     before do
       @user = create(:user)
       @request.env['devise.mapping'] = Devise.mappings[:user]

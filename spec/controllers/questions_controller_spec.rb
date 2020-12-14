@@ -30,7 +30,7 @@ describe QuestionsController do
   end
 
   describe 'GET #new' do
-    sigh_in_user
+    sign_in_user
 
     before { get :new }
 
@@ -44,7 +44,7 @@ describe QuestionsController do
   end
 
   describe 'GET #edit' do
-    sigh_in_user
+    sign_in_user
 
     before do
       get :edit, params: { id: question.id }
@@ -60,7 +60,7 @@ describe QuestionsController do
   end
 
   describe 'POST #create' do
-    sigh_in_user
+    sign_in_user
 
     context 'with valid attributes' do
       it 'saves the new question in the database' do
@@ -87,7 +87,7 @@ describe QuestionsController do
   end
 
   describe 'PATCH #update' do
-    sigh_in_user
+    sign_in_user
 
     context 'when valid attributes' do
       it 'assings the requested question to @question' do
@@ -103,7 +103,7 @@ describe QuestionsController do
   end
 
   describe 'DELETE #destroy' do
-    sigh_in_user
+    sign_in_user
 
     before { question }
 
