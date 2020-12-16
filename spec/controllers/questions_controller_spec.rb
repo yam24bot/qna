@@ -1,10 +1,31 @@
 describe QuestionsController do
   let(:question) { create(:question) }
 
+  describe 'Redirect when Unregistered User' do
+    it 'went to #new' do
+      get :new
+      expect(response).to redirect_to 'http://test.host/users/sign_in'
+    end
+
+    it 'went to #edit' do
+      get :edit, params: { id: question.id }
+      expect(response).to redirect_to 'http://test.host/users/sign_in'
+    end
+
+    it 'went to #destory' do
+      delete :destroy, params: { id: question.id }
+      expect(response).to redirect_to 'http://test.host/users/sign_in'
+    end
+  end
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
 
     before { get :index }
+
+    it 'expects status 200 the User arrive to #index' do
+      expect(response).to have_http_status(:ok)
+    end
 
     it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
@@ -20,6 +41,10 @@ describe QuestionsController do
       get :show, params: { id: question.id }
     end
 
+    it 'expects status 200 the User arrive to #show' do
+      expect(response).to have_http_status(:ok)
+    end
+
     it 'assings the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
@@ -30,9 +55,14 @@ describe QuestionsController do
   end
 
   describe 'GET #new' do
+
     sign_in_user
 
     before { get :new }
+
+    it 'expects status 200 the User arrive to #new' do
+      expect(response).to have_http_status(200)
+    end
 
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -50,6 +80,10 @@ describe QuestionsController do
       get :edit, params: { id: question.id }
     end
 
+    it 'expects status 200 the User arrive to #edit' do
+      expect(response).to have_http_status(200)
+    end
+
     it 'assings the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
@@ -60,59 +94,87 @@ describe QuestionsController do
   end
 
   describe 'POST #create' do
+    let(:create_question_with_params) { post :create, params: { question: attributes_for(:question) } }
+
     sign_in_user
+
+    it 'expects status 302 the User arrive to #create and redirect afrer creating to #show' do
+      create_question_with_params
+      expect(response).to have_http_status(:found)
+    end
 
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
+        expect { create_question_with_params }.to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, params: { question: attributes_for(:question) }
+        create_question_with_params
 
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
     context 'with invalid attributes' do
+      let(:create_with_invalid_params) { post :create, params: { question: attributes_for(:invalid_question) } }
+
+      it 'expects status :ok the User arrive to #create and redirect after creating to #show' do
+        create_with_invalid_params
+        expect(response).to have_http_status(:ok)
+      end
+
       it 'does not save the question' do
-        expect { post :create, params: { question: attributes_for(:invalid_question) } }.not_to change(Question, :count)
+        expect { create_with_invalid_params }.not_to change(Question, :count)
       end
 
       it 're-renders new view' do
-        post :create, params: { question: attributes_for(:invalid_question) }
+        create_with_invalid_params
         expect(response).to render_template :new
       end
     end
   end
 
   describe 'PATCH #update' do
+    let(:question_params_patch) { patch :update, params: { question: attributes_for(:question), id: question.id } }
+
     sign_in_user
+
+    it 'expected :found when valid attributes' do
+      question_params_patch
+      expect(response).to have_http_status(:found)
+    end
 
     context 'when valid attributes' do
       it 'assings the requested question to @question' do
-        patch :update, params: { question: attributes_for(:question), id: question.id }
+        question_params_patch
         expect(assigns(:question)).to eq question
       end
 
       it 'redirects to the updated question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
+        question_params_patch
         expect(response).to redirect_to question
       end
     end
   end
 
   describe 'DELETE #destroy' do
+    let(:delete_question) { delete :destroy, params: { id: question.id  } }
+
     sign_in_user
 
     before { question }
 
+    it 'expected :found when delete question' do
+      delete_question
+      expect(response).to have_http_status(:found)
+    end
+
     it 'deletes question' do
-      expect { delete :destroy, params: { id: question.id } }.to change(Question, :count).by(-1)
+      expect { delete_question }.to change(Question, :count).by(-1)
     end
 
     it 'redirect to index view' do
-      delete :destroy, params: { id: question.id }
+      delete_question
       expect(response).to redirect_to questions_path
     end
   end
