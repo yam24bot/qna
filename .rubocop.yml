@@ -2,9 +2,11 @@ require: rubocop-rspec
 Style/FrozenStringLiteralComment:
   Enabled: false
 RSpec/Capybara/FeatureMethods:
-  Enabled: false
-RSpec/MultipleExpectations:
-  Enabled: false
+  Exclude:
+    - 'spec/**/*'
+RSpec/NestedGroups:
+  Exclude:
+    - 'spec/controllers/questions_controller_spec.rb'
 Documentation:
   Enabled: false
 AllCops:
