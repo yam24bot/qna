@@ -55,13 +55,12 @@ describe QuestionsController do
   end
 
   describe 'GET #new' do
-
     sign_in_user
 
     before { get :new }
 
     it 'expects status 200 the User arrive to #new' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it 'assigns a new Question to @question' do
@@ -81,7 +80,7 @@ describe QuestionsController do
     end
 
     it 'expects status 200 the User arrive to #edit' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it 'assings the requested question to @question' do
@@ -158,7 +157,7 @@ describe QuestionsController do
   end
 
   describe 'DELETE #destroy' do
-    let(:delete_question) { delete :destroy, params: { id: question.id  } }
+    let(:delete_question) { delete :destroy, params: { id: question.id } }
 
     sign_in_user
 

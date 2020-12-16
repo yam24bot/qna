@@ -4,7 +4,8 @@ feature 'Create Question', '
   I want to be able to ask questions
 ' do
   given(:user) { create(:user) }
-  let(:fill_in_form) do
+
+  def fill_in_form
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'Test body'
     click_on 'Create'
