@@ -1,7 +1,8 @@
 describe QuestionsController do
+  let(:user_for_login) { create(:user) }
   let(:question) { create(:question) }
 
-  describe 'GET' do
+  context 'GET' do
     it '#new when unregistered' do
       get :new
       expect(response).to redirect_to user_session_url
@@ -28,7 +29,7 @@ describe QuestionsController do
     end
   end
 
-  describe 'GET #index' do
+  context 'GET #index' do
     let(:questions) { create_list(:question, 2) }
 
     before { get :index }
@@ -46,7 +47,7 @@ describe QuestionsController do
     end
   end
 
-  describe 'GET #show' do
+  context 'GET #show' do
     before do
       get :show, params: { id: question.id }
     end
@@ -65,9 +66,11 @@ describe QuestionsController do
   end
 
   context 'when user authenticated' do
-    sign_in_user
+    before do
+      sign_in user_for_login
+    end
 
-    describe 'GET #new' do
+    context 'GET #new' do
       before { get :new }
 
       it 'expects status 200 the User arrive to #new' do
@@ -83,7 +86,7 @@ describe QuestionsController do
       end
     end
 
-    describe 'GET #edit' do
+    context 'GET #edit' do
       before do
         get :edit, params: { id: question.id }
       end
@@ -101,7 +104,7 @@ describe QuestionsController do
       end
     end
 
-    describe 'POST #create' do
+    context 'POST #create' do
       def create_question_with_params
         post :create, params: { question: attributes_for(:question) }
       end
@@ -144,7 +147,7 @@ describe QuestionsController do
       end
     end
 
-    describe 'PATCH #update' do
+    context 'PATCH #update' do
       def question_params_patch
         patch :update, params: { question: attributes_for(:question), id: question.id }
       end
@@ -167,7 +170,7 @@ describe QuestionsController do
       end
     end
 
-    describe 'DELETE #destroy' do
+    context 'DELETE #destroy' do
       def delete_question
         delete :destroy, params: { id: question.id }
       end
