@@ -2,33 +2,6 @@ describe QuestionsController do
   let(:user_for_login) { create(:user) }
   let(:question) { create(:question) }
 
-  context 'when user GET' do
-    it '#new if unregistered' do
-      get :new
-      expect(response).to redirect_to user_session_url
-    end
-
-    it '#edit if unregistered' do
-      get :edit, params: { id: question.id }
-      expect(response).to redirect_to user_session_url
-    end
-
-    it '#destroy if unregistered' do
-      delete :destroy, params: { id: question.id }
-      expect(response).to redirect_to user_session_url
-    end
-
-    it '#create if unregistered' do
-      post :create, params: { question: attributes_for(:question) }
-      expect(response).to redirect_to user_session_url
-    end
-
-    it '#update if unregistered' do
-      patch :update, params: { question: attributes_for(:question), id: question.id }
-      expect(response).to redirect_to user_session_url
-    end
-  end
-
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
 
@@ -65,13 +38,19 @@ describe QuestionsController do
     end
   end
 
-  describe 'Authenticated' do
-    before do
-      sign_in user_for_login
+  describe 'GET #new' do
+    context 'when User unauthenticated' do
+      it 'expected redirect' do
+        get :new
+        expect(response).to redirect_to user_session_url
+      end
     end
 
-    describe 'GET #new' do
-      before { get :new }
+    context 'when User authenticated' do
+      before do
+        sign_in user_for_login
+        get :new
+      end
 
       it 'expects status 200 the User arrive to #new' do
         expect(response).to have_http_status(:ok)
@@ -85,9 +64,19 @@ describe QuestionsController do
         expect(response).to render_template :new
       end
     end
+  end
 
-    describe 'GET #edit' do
+  describe 'GET #edit' do
+    context 'when User unauthenticated' do
+      it 'expected redirect' do
+        get :edit, params: { id: question.id }
+        expect(response).to redirect_to user_session_url
+      end
+    end
+
+    context 'when User authenticated' do
       before do
+        sign_in user_for_login
         get :edit, params: { id: question.id }
       end
 
@@ -103,8 +92,21 @@ describe QuestionsController do
         expect(response).to render_template :edit
       end
     end
+  end
 
-    describe 'POST #create' do
+  describe 'POST #create' do
+    context 'when User unauthenticated' do
+      it 'expected redirect' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(response).to redirect_to user_session_url
+      end
+    end
+
+    context 'when User authenticated' do
+      before do
+        sign_in user_for_login
+      end
+
       def create_question_with_params
         post :create, params: { question: attributes_for(:question) }
       end
@@ -146,8 +148,21 @@ describe QuestionsController do
         end
       end
     end
+  end
 
-    describe 'PATCH #update' do
+  describe 'PATCH #update' do
+    context 'when User unauthenticated' do
+      it 'expected redirect' do
+        patch :update, params: { question: attributes_for(:question), id: question.id }
+        expect(response).to redirect_to user_session_url
+      end
+    end
+
+    context 'when User authenticated' do
+      before do
+        sign_in user_for_login
+      end
+
       def question_params_patch
         patch :update, params: { question: attributes_for(:question), id: question.id }
       end
@@ -169,13 +184,25 @@ describe QuestionsController do
         end
       end
     end
+  end
 
-    describe 'DELETE #destroy' do
+  describe 'DELETE #destroy' do
+    context 'when User unregistered' do
+      it 'expected redirect' do
+        delete :destroy, params: { id: question.id }
+        expect(response).to redirect_to user_session_url
+      end
+    end
+
+    context 'when User authenticated' do
+      before do
+        sign_in user_for_login
+        question
+      end
+
       def delete_question
         delete :destroy, params: { id: question.id }
       end
-
-      before { question }
 
       it 'expected :found when delete question' do
         delete_question
