@@ -20,7 +20,7 @@ describe QuestionsController do
     end
   end
 
-  describe 'when user GET #show' do
+  describe 'GET #show' do
     before do
       get :show, params: { id: question.id }
     end
@@ -40,7 +40,7 @@ describe QuestionsController do
 
   describe 'GET #new' do
     context 'when User unauthenticated' do
-      it 'expected redirect' do
+      it 'expected rejection of new' do
         get :new
         expect(response).to redirect_to user_session_url
       end
@@ -68,7 +68,7 @@ describe QuestionsController do
 
   describe 'GET #edit' do
     context 'when User unauthenticated' do
-      it 'expected redirect' do
+      it 'expected rejection of edit' do
         get :edit, params: { id: question.id }
         expect(response).to redirect_to user_session_url
       end
@@ -96,7 +96,7 @@ describe QuestionsController do
 
   describe 'POST #create' do
     context 'when User unauthenticated' do
-      it 'expected redirect' do
+      it 'expected rejection of create' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to user_session_url
       end
@@ -152,7 +152,7 @@ describe QuestionsController do
 
   describe 'PATCH #update' do
     context 'when User unauthenticated' do
-      it 'expected redirect' do
+      it 'expected rejection of update' do
         patch :update, params: { question: attributes_for(:question), id: question.id }
         expect(response).to redirect_to user_session_url
       end
@@ -188,7 +188,7 @@ describe QuestionsController do
 
   describe 'DELETE #destroy' do
     context 'when User unregistered' do
-      it 'expected redirect' do
+      it 'expected rejection of delete' do
         delete :destroy, params: { id: question.id }
         expect(response).to redirect_to user_session_url
       end
