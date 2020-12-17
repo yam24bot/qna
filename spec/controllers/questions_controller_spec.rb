@@ -44,6 +44,10 @@ describe QuestionsController do
         get :new
         expect(response).to redirect_to user_session_url
       end
+
+      it 'expected rejection of creating new' do
+        expect(assigns(:question)).not_to be_a_new(Question)
+      end
     end
 
     context 'when User authenticated' do
@@ -95,20 +99,24 @@ describe QuestionsController do
   end
 
   describe 'POST #create' do
+    def create_question_with_params
+      post :create, params: { question: attributes_for(:question) }
+    end
+
     context 'when User unauthenticated' do
       it 'expected rejection of create' do
-        post :create, params: { question: attributes_for(:question) }
+        create_question_with_params
         expect(response).to redirect_to user_session_url
+      end
+
+      it 'expected rejection of creating' do
+        expect { create_question_with_params }.not_to change(Question, :count)
       end
     end
 
     context 'when User authenticated' do
       before do
         sign_in user_for_login
-      end
-
-      def create_question_with_params
-        post :create, params: { question: attributes_for(:question) }
       end
 
       it 'expects status 302 the User arrive to #create and redirect afrer creating to #show' do
@@ -151,9 +159,13 @@ describe QuestionsController do
   end
 
   describe 'PATCH #update' do
+    def question_params_patch
+      patch :update, params: { question: attributes_for(:question), id: question.id }
+    end
+
     context 'when User unauthenticated' do
       it 'expected rejection of update' do
-        patch :update, params: { question: attributes_for(:question), id: question.id }
+        question_params_patch
         expect(response).to redirect_to user_session_url
       end
     end
@@ -161,10 +173,6 @@ describe QuestionsController do
     context 'when User authenticated' do
       before do
         sign_in user_for_login
-      end
-
-      def question_params_patch
-        patch :update, params: { question: attributes_for(:question), id: question.id }
       end
 
       it 'expected :found when valid attributes' do
@@ -187,10 +195,19 @@ describe QuestionsController do
   end
 
   describe 'DELETE #destroy' do
-    context 'when User unregistered' do
+    def delete_question
+      delete :destroy, params: { id: question.id }
+    end
+
+    context 'when User non-authenticated' do
       it 'expected rejection of delete' do
-        delete :destroy, params: { id: question.id }
+        delete_question
         expect(response).to redirect_to user_session_url
+      end
+
+      it 'expected rejection of deleting' do
+        question
+        expect { delete_question }.not_to change(Question, :count)
       end
     end
 
@@ -198,10 +215,6 @@ describe QuestionsController do
       before do
         sign_in user_for_login
         question
-      end
-
-      def delete_question
-        delete :destroy, params: { id: question.id }
       end
 
       it 'expected :found when delete question' do

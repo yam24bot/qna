@@ -3,10 +3,9 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 RSpec/Capybara/FeatureMethods:
   Exclude:
-    - 'spec/**/*'
+    - 'spec/acceptance/**/*'
 RSpec/NestedGroups:
-  Exclude:
-    - 'spec/controllers/questions_controller_spec.rb'
+  Max: 5
 Documentation:
   Enabled: false
 AllCops:
