@@ -2,34 +2,34 @@ describe QuestionsController do
   let(:user_for_login) { create(:user) }
   let(:question) { create(:question) }
 
-  context 'GET' do
-    it '#new when unregistered' do
+  context 'when user GET' do
+    it '#new if unregistered' do
       get :new
       expect(response).to redirect_to user_session_url
     end
 
-    it '#edit when unregistered' do
+    it '#edit if unregistered' do
       get :edit, params: { id: question.id }
       expect(response).to redirect_to user_session_url
     end
 
-    it '#destroy when unregistered' do
+    it '#destroy if unregistered' do
       delete :destroy, params: { id: question.id }
       expect(response).to redirect_to user_session_url
     end
 
-    it '#create when unregistered' do
+    it '#create if unregistered' do
       post :create, params: { question: attributes_for(:question) }
       expect(response).to redirect_to user_session_url
     end
 
-    it '#update when unregistered' do
+    it '#update if unregistered' do
       patch :update, params: { question: attributes_for(:question), id: question.id }
       expect(response).to redirect_to user_session_url
     end
   end
 
-  context 'GET #index' do
+  describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
 
     before { get :index }
@@ -47,7 +47,7 @@ describe QuestionsController do
     end
   end
 
-  context 'GET #show' do
+  describe 'when user GET #show' do
     before do
       get :show, params: { id: question.id }
     end
@@ -65,12 +65,12 @@ describe QuestionsController do
     end
   end
 
-  context 'when user authenticated' do
+  describe 'Authenticated' do
     before do
       sign_in user_for_login
     end
 
-    context 'GET #new' do
+    describe 'GET #new' do
       before { get :new }
 
       it 'expects status 200 the User arrive to #new' do
@@ -86,7 +86,7 @@ describe QuestionsController do
       end
     end
 
-    context 'GET #edit' do
+    describe 'GET #edit' do
       before do
         get :edit, params: { id: question.id }
       end
@@ -104,7 +104,7 @@ describe QuestionsController do
       end
     end
 
-    context 'POST #create' do
+    describe 'POST #create' do
       def create_question_with_params
         post :create, params: { question: attributes_for(:question) }
       end
@@ -147,7 +147,7 @@ describe QuestionsController do
       end
     end
 
-    context 'PATCH #update' do
+    describe 'PATCH #update' do
       def question_params_patch
         patch :update, params: { question: attributes_for(:question), id: question.id }
       end
@@ -170,7 +170,7 @@ describe QuestionsController do
       end
     end
 
-    context 'DELETE #destroy' do
+    describe 'DELETE #destroy' do
       def delete_question
         delete :destroy, params: { id: question.id }
       end
