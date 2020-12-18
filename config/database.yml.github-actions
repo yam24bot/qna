@@ -1,0 +1,17 @@
+test:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: github-actions
+  pool: 20
+  username: postgres
+  password: postgres
+
+development:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: github-actions
+  pool: 20
+  username: postgres
+  password: postgres

@@ -1,11 +1,17 @@
 require: rubocop-rspec
 Style/FrozenStringLiteralComment:
   Enabled: false
+RSpec/Capybara/FeatureMethods:
+  Exclude:
+    - 'spec/acceptance/**/*'
+RSpec/NestedGroups:
+  Max: 5
 Documentation:
   Enabled: false
 AllCops:
   NewCops: enable
   Exclude:
+    - 'db/migrate/20201214102102_add_devise_to_users.rb'
     - 'bin/**/*'
     - 'db/schema.rb'
     - 'node_modules/**/*'
@@ -13,6 +19,7 @@ AllCops:
     - 'config/spring.rb'
     - 'config/application.rb'
     - 'config/environments/**/*'
+    - 'config/initializers/devise.rb'
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
