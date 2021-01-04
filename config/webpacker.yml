@@ -1,10 +1,10 @@
 # Note: You must restart bin/webpack-dev-server for changes to take effect
 
 default: &default
-  source_path: app/javascript
+  source_path: frontend
   source_entry_path: packs
   public_root_path: public
-  public_output_path: packs
+  public_output_path: assets/packs # outputs to => public/assets/packs
   cache_path: tmp/cache/webpacker
   check_yarn_integrity: false
   webpack_compile_output: true
@@ -14,7 +14,7 @@ default: &default
   resolved_paths: []
 
   # Reload manifest.json on all requests so we reload latest compiled packs
-  cache_manifest: false
+  cache_manifest: true
 
   # Extract and emit a css file
   extract_css: false
@@ -34,6 +34,7 @@ default: &default
     - .woff2
 
   extensions:
+    - .jsx
     - .mjs
     - .js
     - .sass

@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
-  resources :questions
+  # root to: 'questions#index'
+  root 'static#index'
 
-  root to: 'questions#index'
+  namespace :v1, defaults: { format: 'json' } do
+    devise_for :users
+
+    resources :questions
+
+    get 'questions', to: 'question:index'
+  end
 end
