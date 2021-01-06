@@ -2,15 +2,16 @@ describe AnswersController do
   describe 'POST #create' do
     let(:question) { create(:question) }
 
+    def create_answer_with_params
+      post :create, params: { answer: attributes_for(:answer), question_id: question.id, format: :js }
+    end
+
     context 'with valid attributes' do
-      def create_answer_with_params
-        post :create, params: { answer: attributes_for(:answer), question_id: question.id }
-      end
       it 'saves the new answer in the database' do
         expect { create_answer_with_params }.to change(question.answers, :count).by(1)
       end
 
-      it 'redirects to question show view' do
+      it 'render create template' do
         create_answer_with_params
         expect(response).to redirect_to question_path(question)
       end
