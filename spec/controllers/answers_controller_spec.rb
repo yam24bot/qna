@@ -13,22 +13,24 @@ describe AnswersController do
 
       it 'render create template' do
         create_answer_with_params
-        expect(response).to redirect_to question_path(question)
+        expect(response).to have_http_status(:success)
       end
     end
 
     context 'with invalid attributes' do
       def create_answer_with_invalid_params
-        post :create, params: { answer: attributes_for(:invalid_answer), question_id: question }
+        post :create, params: { answer: attributes_for(:invalid_answer), question_id: question, format: :js }
       end
 
       it 'does not save the question' do
         expect { create_answer_with_invalid_params }.not_to change(Answer, :count)
       end
 
-      it 'redirects to question show view' do
+      it 'sends empty params' do
+        # TODO: flash error empty params => check it here
+
         create_answer_with_invalid_params
-        expect(response).to redirect_to question_path(question)
+        expect(response).to have_http_status(:success)
       end
     end
   end

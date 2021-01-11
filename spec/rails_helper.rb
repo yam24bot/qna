@@ -8,9 +8,12 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 
-Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new app, browser: :chrome,
+                                      options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
 end
+
+Capybara.javascript_driver = :chrome
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
