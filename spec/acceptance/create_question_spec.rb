@@ -24,6 +24,6 @@ feature 'Create Question', '
     visit questions_path
     click_on 'Ask question'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content 'Log in'
   end
 end
