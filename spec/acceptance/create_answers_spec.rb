@@ -1,6 +1,5 @@
 feature 'User answer', '
   In order to exchange my knowledge
-  As an authenticated user
   I want to be able to create answers
 ' do
   given(:user) { create(:user) }
@@ -20,6 +19,8 @@ feature 'User answer', '
 
     fill_in 'Your answer', with: 'My answer'
     click_on 'Create'
+
+    sleep(5)
 
     expect(page).to have_content 'My answer'
   end
