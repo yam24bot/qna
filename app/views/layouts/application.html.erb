@@ -10,12 +10,10 @@
   </head>
 
   <body>
-  <div id="flash">
-  <% if notice.present? %>
-    <%= render partial: "shared/notice_banner" %>
-  <% end %>
-  </div>
-  <%= link_to "Sign out", destroy_user_session_url, method: :delete %>
-  <%= yield %>
+
+    <%= render 'layouts/navbar' %>
+    <%= render 'layouts/flash' %>
+
+    <%= yield %>
   </body>
 </html>
