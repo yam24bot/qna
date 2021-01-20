@@ -19,9 +19,6 @@ feature 'User answer', '
 
     fill_in 'Your answer', with: 'My answer'
     click_on 'Create'
-
-    sleep(5)
-
-    expect(page).to have_content 'My answer'
+    expect(page).to have_content 'Successfully created'
   end
 end
