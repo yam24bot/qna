@@ -1,6 +1,10 @@
 <%= form_for [@question, @answer], remote: true  do |f| %>
-  <%= f.label :body, 'Your answer' %>
-  <%= f.text_area :body %>
-  <%= f.submit 'Create' %>
+  <form>
+  <div class="form-group">
+    <label for="exampleInputPassword1"><%=	f.label :body, 'Your answer' %></label>
+    <%=	f.text_area :body, :class => "form-control" %>
+  </div>
+  <%= f.submit 'Create', :class => "btn btn-primary" %>
+</form>
 <% end %>
   

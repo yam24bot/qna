@@ -11,7 +11,7 @@ feature 'Create Question', '
     click_on 'Create'
   end
 
-  scenario 'Authenticated User creates Question' do
+  scenario 'Authenticated User creates Question', js: true do
     sign_in(user)
 
     visit questions_path
