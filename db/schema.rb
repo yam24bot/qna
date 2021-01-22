@@ -28,8 +28,6 @@ ActiveRecord::Schema.define(version: 2021_01_08_115504) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "{:foreign_key=>true}_id"
-    t.index ["{:foreign_key=>true}_id"], name: "index_questions_on_{:foreign_key=>true}_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -13,12 +13,12 @@ feature 'User answer', '
     expect(page).to eq page
   end
 
-  # scenario 'Authenticated user create answer' do
-  #   sign_in(user)
-  #   visit question_path(question)
-  #
-  #   fill_in 'Your answer', with: 'My answer'
-  #   click_on 'Create'
-  #   expect(page).to have_content 'Successfully created'
-  # end
+  scenario 'Authenticated user create answer' do
+    sign_in(user)
+    visit question_path(question)
+
+    fill_in 'Your answer', with: 'My answer'
+    click_on 'Create'
+    expect(page).to have_content 'Your answer'
+  end
 end
