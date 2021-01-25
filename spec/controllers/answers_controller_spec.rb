@@ -15,7 +15,7 @@ describe AnswersController do
           expect { post_with(valid_attributes) }.not_to change(question.answers, :count)
         end
 
-        it 'render create template' do
+        it 'has status unauthorized' do
           post_with(invalid_attributes)
           expect(response).to have_http_status(:unauthorized)
         end
