@@ -2,8 +2,8 @@
   <form>
     <div class="form-group">
       <label for="exampleInputPassword1"><%= f.label :body, 'Your answer' %></label>
-      <%= f.text_area :body, :class => "form-control" %>
+      <%= f.text_area :body, class: "form-control" %>
     </div>
-  <%= f.submit 'Create', :class => "btn btn-primary" %>
+  <%= f.submit 'Create', class: "btn btn-primary" %>
   </form>
 <% end %>
