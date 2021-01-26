@@ -1,0 +1,11 @@
+<%= form_for @question do |f| %>
+<form>
+  <div class="form-group">
+    <%= f.label :title, "Title" %>
+    <%= f.text_field :title, id: "question_title", class: "form-control" %>
+    <%= f.label :body, "Body" %>
+    <%= f.text_area :body, id: "question_body", class: "form-control" %>
+  </div>
+  <%= f.submit 'Create', class: "btn btn-primary" %>
+</form>
+<% end %>

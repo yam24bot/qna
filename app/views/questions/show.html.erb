@@ -1,0 +1,10 @@
+<h1> <%= @question.title %> </h1>
+<p> <%= @question.body %> </p>
+<hr>
+
+<div class = "answers">
+  <%= render "answers" %>
+</div>
+<hr>
+
+<%= render "questions/answer_form" %>
