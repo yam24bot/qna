@@ -1,3 +1,5 @@
+require_relative 'acceptance_helper'
+
 feature 'User answer', '
   In order to exchange my knowledge
   I want to be able to create answers
@@ -20,5 +22,14 @@ feature 'User answer', '
     fill_in 'Your answer', with: 'My answer'
     click_on 'Create'
     expect(page).to have_content 'Your answer'
+  end
+
+  scenario 'Authenticated user try to create invalid answer' do
+    sign_in(user)
+    visit question_path(question)
+
+    click_on 'Create'
+
+    expect(page).to have_content "Body can't be blank"
   end
 end

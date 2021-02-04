@@ -6,10 +6,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
+        <li>
+          <%= link_to "New question", new_question_path, class: "nav-link" %>
+        </li>
         <%- if current_user %>
-          <li>
-            <%= link_to "New question", new_question_path, class: "nav-link" %>
-          </li>
           <li>
             <%= link_to "Hello, #{current_user.email}!",  new_question_path, class:"nav-link" %>
           </li>

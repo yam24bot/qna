@@ -23,3 +23,9 @@ AllCops:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/acceptance/edit_answer_spec.rb'
+RSpec/ExampleLength:
+  Exclude:
+    - 'spec/acceptance/edit_answer_spec.rb'

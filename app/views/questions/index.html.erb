@@ -1,1 +1,17 @@
 <p> <%= link_to 'Ask question', new_question_path %> </p>
+<% @questions.each do | question | %>
+<div class="card text-center">
+  <div class="card-body">
+    <h4 class="card-title">
+      <%= link_to question.title, question_path(question) %>
+    </h4>
+<!--    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
+    <p class="card-text">
+      Some quick example text to build on the card title
+      and make up the bulk of the card's content.
+    </p>
+    <a class="card-link">Answers: <%= question.answers.count %></a>
+    <a class="card-link">Topic starter: nil</a>
+  </div>
+</div>
+<% end %>

@@ -1,6 +1,6 @@
 <% unless @answer.errors.present? %>
-  $('.answers').html("<%= j render './questions/answers' %>");
-  $('#answer_body').val(' ')
+$('.answers').html("<%= j render './questions/answers' %>");
+$('#answer_body').val(' ')
 <% end %>
 
 $("#flash").html('<%= j render partial: "shared/notice_banner" %>');
