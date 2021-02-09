@@ -1,4 +1,5 @@
-<div data-alert class="alert alert-primary" role="alert" >
-  <%= notice %>
-  <a href="#" class="close">&times;</a>
-</div>
+<% flash.each do |name, msg| %>
+  <div class = "alert alert-<%= name %>">
+    <%= msg %>
+  </div>
+<% end %>

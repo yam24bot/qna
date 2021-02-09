@@ -1,3 +1,15 @@
-<% @question.answers.each do |answer| %>
-  <p> <%= answer.body %> </p>
+<% @question.saved_answers.each do |answer| %>
+  <p><%= answer.body %></p>
+  <% if user_signed_in? %>
+    <p><%= button_tag "Edit", onclick: "document.getElementById(`edit_answer_#{answer.id}`).style.display = 'block';" %></p>
+      <%= form_for [@question, answer], remote: true  do |f| %>
+      <form>
+        <div class="form-group">
+          <%= f.label :body, "Your answer" %>
+          <%= f.text_area :body, id: "answer_body", class: "form-control" %>
+        </div>
+        <%= f.submit 'Update answer', class: "btn btn-primary" %>
+      </form>
+    <% end %>
+  <% end %>
 <% end %>
